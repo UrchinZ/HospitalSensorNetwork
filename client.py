@@ -14,7 +14,7 @@ def Main():
 	#Sensor set up code
 	i2c_bus = smbus.SMBus(1)	
 	# local host IP '127.0.0.1'
-	server = '127.0.0.1'
+	server = '192.168.1.124'
 	local = socket.gethostbyname(socket.gethostname())
 	# Define the port on which you want to connect
 	port = 10000+236
@@ -29,6 +29,7 @@ def Main():
 	while True:
 		print "The body temperature of the patient "+local+" is "+message
 		# message sent to server
+		message ='2 ' + message 
 		s.send(message.encode('ascii'))
 		
 		# messaga received from server

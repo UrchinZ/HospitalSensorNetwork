@@ -1,3 +1,4 @@
+
 # import socket programming library
 import socket
  
@@ -31,7 +32,7 @@ def turn_off_LED(ledpin):
 #function to buzz buzzer for 2 seconds
 def buzz():
     GPIO.output(27,GPIO.HIGH)
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(27,GPIO.LOW)    
  
 # thread fuction
@@ -43,17 +44,15 @@ def threaded(c,addr):
         if not data:
             print('Bye')
             break
-        
-        converted = convert_temp(data)
+        client,tmp = data.split(' ')
+	converted = convert_temp(tmp)
         print addr[0]+" : "+data+" to "+ str(converted)+'\'F'
 	
 	# Determine what client is sending data
-        clientnum = int(addr[0].split('.')[-1])
-    	print clientnum
-        clientnum = 2 #testing
+        clientnum = int(client)
         # send CPU temperature back to client
         c.send(str(converted)+'\'F')
-	if converted > 78:
+	if converted > 80:
 	    buzz()
 	    turn_on_LED(clientnum)		  
 	    print("raise alarm")
